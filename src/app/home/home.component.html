@@ -1,0 +1,13 @@
+    <div class="mainContainer">
+        <span class="categoriesLabel">Categories</span>
+
+        <div class="categoriesContainer">
+            <div *ngFor="let category of categoryData" class="categoryButtonContainer">
+                <!-- <button  routerLink="/playground" class="categoryButton">Geography</button>  -->
+                <button  routerLink="/playground" class="categoryButton" (click)="gotoPlay(category)">{{ category }}</button> 
+
+            </div>
+        </div>
+
+    </div>
+<router-outlet></router-outlet>

@@ -1,0 +1,17 @@
+<!-- <p>playground works!</p> -->
+<div class="mainContainer">
+    <div class="headerContainer">
+        <button routerLink="/home" class="exitButton">Exit Game</button>
+        <div class="scoreCard">
+            <span class="scoreLabel">Score:</span>
+            <span class="scoreValue"> {{scoreValue}}</span>
+        </div>
+    </div>
+
+    <div *ngFor="let que of triviaData" class="contentContainer">
+        <span class="question" [(ngModel)] = "Question" >{{Question}}</span>
+        <input type="text" class="answerBox" id="answerBox" [(ngModel)] = "answerInput" placeholder="Enter your answer here...">
+        <button class="submitButton" (click)="submitAnswer()">Submit Answer ➤</button>
+    </div>
+
+</div>
