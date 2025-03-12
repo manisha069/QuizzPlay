@@ -16,12 +16,12 @@ export class PlaygroundComponent {
   scoreValue: number = 0;
   answerInput:any;
   triviaData :any =[];
-  questionsArray :any=[];
   scoreCounter :any;
   answerValid :boolean = true;
   currQueIndex :number =0; 
   Question : string ="";
   endQuizz: boolean = false
+  tempAnsVar : string = "";
 
 ngOnInit(){
   this.categoryCode.getCategoryCode(this.quizService.category);
@@ -41,36 +41,36 @@ ngOnInit(){
 }
 
 
-  //✅TODO: not taking any variable as paramenter as directly ngModel updates the variable
-  //✅TODO: need to make sure to redo input field and answer variable at every question increment.
   submitAnswer(){
     console.log(this.answerInput);
 
     if(this.answerInput == "" || this.answerInput == null ||  this.answerInput == undefined){
-      //TODO: show error message of empty field
-      this.answerValid = false;
-      // console.log("invlid anshwer", this.answerValid)      
+    
+      this.answerValid = false;     
     }
     else{
-      this.answerValid = true;
-      console.log("valid answer", this.answerValid, this.answerInput)
 
-      console.log("1",this.answerInput.toLowerCase())
-      console.log("2", this.triviaData[this.currQueIndex].correct_answer.toLowerCase())
-      if(this.answerInput.toLowerCase() === this.triviaData[this.currQueIndex].correct_answer.toLowerCase()){
-        // TODO: display correct answer message
-        this.answerInput="";
-        this.scoreValue += 1;
+      // putting redundant code here
+      this.answerValid = true;
+      this.tempAnsVar = this.answerInput;
+      this.answerInput="";
+      
+
+      //displaying next question before the code to update the score, as it is time taking.
+      
+
+      
+      if(this.tempAnsVar.toLowerCase() === this.triviaData[this.currQueIndex].correct_answer.toLowerCase()){
         this.currQueIndex += 1;
+        this.scoreValue += 1;
         this.displayNextQ();
       }
       else{
-        // TODO: display incorrect answer message
-        this.answerInput="";
+        //adding this here because without this it was not increasing next que if wrong ans.
         this.currQueIndex += 1;
         this.displayNextQ();
       }
-      this.answerInput="";
+      // this.answerInput="";
     }
      
    
@@ -90,12 +90,24 @@ ngOnInit(){
     //✅TODO: you have reached the end of this quiz, your score is 
     //✅display final score
     // TODO: go back to categories page
-    this.router.navigate(['/home'])
+    // this.router.navigate(['/home'])
 
   }
 
-  inputOnClick(){
-    this.answerValid = true;
+  // inputOnClick(){
+  //   this.answerValid = true;
+  // }
+
+  exitGame(){
+  this.scoreValue= 0;
+  this.answerInput = "";
+  this.triviaData = [];
+  this.scoreCounter = 0;
+  this.answerValid = true;
+  this.currQueIndex = 0; 
+  this.Question = "";
+  this.endQuizz = false
+  this.tempAnsVar = "";
   }
 
   
