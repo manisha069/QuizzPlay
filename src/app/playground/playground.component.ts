@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { QuizzerService } from '../services/quizzer.service';
 import { CategoryCodeService } from '../services/category-code.service';
+import {Router} from "@angular/router"
 
 
 @Component({
@@ -10,7 +11,7 @@ import { CategoryCodeService } from '../services/category-code.service';
 })
 export class PlaygroundComponent {
 
-  constructor( private quizService : QuizzerService, private categoryCode : CategoryCodeService){}
+  constructor( private quizService : QuizzerService, private categoryCode : CategoryCodeService, private router: Router){}
 
   scoreValue: number = 0;
   answerInput:any;
@@ -20,6 +21,7 @@ export class PlaygroundComponent {
   answerValid :boolean = true;
   currQueIndex :number =0; 
   Question : string ="";
+  endQuizz: boolean = false
 
 ngOnInit(){
   this.categoryCode.getCategoryCode(this.quizService.category);
@@ -39,14 +41,23 @@ ngOnInit(){
 }
 
 
-  //TODO: not taking any variable as paramenter as directly ngModel updates the variable
-  //TODO: need to make sure to redo input field and answer variable at every question increment.
+  //✅TODO: not taking any variable as paramenter as directly ngModel updates the variable
+  //✅TODO: need to make sure to redo input field and answer variable at every question increment.
   submitAnswer(){
-    if(this.answerInput != "" && this.answerInput != null){
-      console.log(this.answerInput);
-      this.answerValid = true;
+    console.log(this.answerInput);
 
-      if(this.answerInput.lower == this.triviaData[this.currQueIndex].correct_answer.lower){
+    if(this.answerInput == "" || this.answerInput == null ||  this.answerInput == undefined){
+      //TODO: show error message of empty field
+      this.answerValid = false;
+      // console.log("invlid anshwer", this.answerValid)      
+    }
+    else{
+      this.answerValid = true;
+      console.log("valid answer", this.answerValid, this.answerInput)
+
+      console.log("1",this.answerInput.toLowerCase())
+      console.log("2", this.triviaData[this.currQueIndex].correct_answer.toLowerCase())
+      if(this.answerInput.toLowerCase() === this.triviaData[this.currQueIndex].correct_answer.toLowerCase()){
         // TODO: display correct answer message
         this.answerInput="";
         this.scoreValue += 1;
@@ -59,23 +70,32 @@ ngOnInit(){
         this.currQueIndex += 1;
         this.displayNextQ();
       }
-    }
-    else{
       this.answerInput="";
-      //TODO: show error message of empty field
     }
      
    
   }
 
   displayNextQ(){
-
+    if (this.currQueIndex <= 9){
+      this.Question = this.triviaData[this.currQueIndex].question;
+    }
+    else{
+      this.endQuiz();
+    }
   }
 
   endQuiz(){
-    //TODO: you have reached the end of this quiz, your score is 
-    //display final score
+    this.endQuizz = true;
+    //✅TODO: you have reached the end of this quiz, your score is 
+    //✅display final score
     // TODO: go back to categories page
+    this.router.navigate(['/home'])
+
+  }
+
+  inputOnClick(){
+    this.answerValid = true;
   }
 
   

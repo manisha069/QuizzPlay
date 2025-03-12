@@ -8,9 +8,13 @@
         </div>
     </div>
 
-    <div *ngFor="let que of triviaData" class="contentContainer">
-        <span class="question" [(ngModel)] = "Question" >{{Question}}</span>
-        <input type="text" class="answerBox" id="answerBox" [(ngModel)] = "answerInput" placeholder="Enter your answer here...">
+    <!-- commented this as it was displaying 10 questions at once -->
+    <!-- <div *ngFor="let que of triviaData" class="contentContainer"> -->
+        <div  class="contentContainer">
+        <span *ngIf="!endQuizz" class="question" [(ngModel)] = "Question" >{{Question}}</span>
+        <span *ngIf="!answerValid && !endQuizz" class="errorMessage">❌ empty answer</span>
+        <span *ngIf="endQuizz" class="endQuiz">You have reached the end of this quiz, your score is {{ scoreValue }}</span>
+        <input *ngIf="!endQuizz" type="text" class="answerBox" id="answerBox" [(ngModel)] = "answerInput" onclick="inputOnClick()" placeholder="Enter your answer here...">
         <button class="submitButton" (click)="submitAnswer()">Submit Answer ➤</button>
     </div>
 
