@@ -70,7 +70,6 @@ ngOnInit(){
         this.currQueIndex += 1;
         this.displayNextQ();
       }
-      // this.answerInput="";
     }
      
    
@@ -87,16 +86,8 @@ ngOnInit(){
 
   endQuiz(){
     this.endQuizz = true;
-    //✅TODO: you have reached the end of this quiz, your score is 
-    //✅display final score
-    // TODO: go back to categories page
-    // this.router.navigate(['/home'])
+   }
 
-  }
-
-  // inputOnClick(){
-  //   this.answerValid = true;
-  // }
 
   exitGame(){
   this.scoreValue= 0;
